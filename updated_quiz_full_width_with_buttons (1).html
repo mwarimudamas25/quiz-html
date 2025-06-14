@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.1</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    #quiz-container {
+      max-width: 100%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .options label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+    .navigation-buttons, .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-btn, .submit-btn, .exit-btn, .review-btn, .back-btn {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .nav-btn {
+      background-color: #ccc;
+    }
+    .submit-btn {
+      background-color: blue;
+      color: white;
+    }
+    .review-btn {
+      background-color: green;
+      color: white;
+    }
+    .exit-btn {
+      background-color: darkred;
+      color: white;
+    }
+    .back-btn {
+      background-color: green;
+      color: white;
+    }
+    #timer {
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+    #result-message {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container" style="display: block;">
+    <div id="timer">IGIHE GISIGAYE: 20:00</div>
+    <div id="question-container"></div>
+
+    <div class="navigation-buttons">
+      <button class="nav-btn" onclick="prevQuestion()">Ikibazo Kibanza</button>
+      <button class="nav-btn" onclick="nextQuestion()">Ikibazo Gikurikira</button>
+    </div>
+
+    <div class="action-buttons">
+      <button class="submit-btn" onclick="submitQuiz()">REBA AMANOTA</button>
+      <button class="review-btn" id="reviewButton" onclick="reviewAnswers()" style="display: none;">SURA IBISUBIZO</button>
+      <button class="back-btn" onclick="goBackToWix()">GARUKA KU RUPAPURO RWA WIX</button>
+      <button class="exit-btn" onclick="exitQuiz()">SOHOKA</button>
+    </div>
+
+    <div id="result-message"></div>
+  </div>
+
+  <script>
+    const questions = Array.from({ length: 20 }).map((_, i) => ({
+      question: `Ikibazo ${i + 1}`,
+      options: ["Igisubizo A", "Igisubizo B", "Igisubizo C", "Igisubizo D"],
+      correct: 1
+    }));
+    let currentQuestion = 0;
+    let answers = Array(questions.length).fill(null);
+    let submitted = false;
+    let timeLeft = 20 * 60;
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("question-container");
+      container.innerHTML = `
+        <div class="question">
+          <p>${q.question}</p>
+          <div class="options">
+            ${q.options.map((opt, i) => `
+              <label>
+                <input type="radio" name="q${currentQuestion}" value="${i}" ${answers[currentQuestion] === i ? "checked" : ""} onclick="saveAnswer(${i})" /> ${opt}
+              </label>`).join("")}
+          </div>
+        </div>`;
+    }
+
+    function saveAnswer(i) {
+      answers[currentQuestion] = i;
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (answers[i] === questions[i].correct) score++;
+      }
+
+      const result = score >= 12
+        ? `<span style="color:green">WABONYE AMANOTA ${score}/20<br>WATSINZE, KOMEREZA AHO!</span>`
+        : `<span style="color:red">WABONYE AMANOTA ${score}/20<br>WATSINZWE, UKENEYE KWIHUGURA!</span>`;
+
+      document.getElementById("result-message").innerHTML = result;
+      document.getElementById("reviewButton").style.display = "inline-block";
+    }
+
+    function reviewAnswers() {
+      let summary = "";
+      for (let i = 0; i < questions.length; i++) {
+        const isCorrect = answers[i] === questions[i].correct;
+        summary += `<p><strong>Ikibazo ${i + 1}:</strong> ${isCorrect ? '<span style="color:green">✔</span>' : '<span style="color:red">✘</span>'}</p>`;
+      }
+      document.getElementById("question-container").innerHTML = summary;
+    }
+
+    function exitQuiz() {
+      location.reload();
+    }
+
+    function goBackToWix() {
+      window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas25-1#quiz-no1"; // Replace with actual Wix anchor/section ID
+    }
+
+    function startTimer() {
+      const timer = document.getElementById("timer");
+      const interval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          submitQuiz();
+        } else {
+          const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+          const seconds = String(timeLeft % 60).padStart(2, "0");
+          timer.textContent = `IGIHE GISIGAYE: ${minutes}:${seconds}`;
+          timeLeft--;
+        }
+      }, 1000);
+    }
+
+    renderQuestion();
+    startTimer();
+  </script>
+</body>
+</html>
