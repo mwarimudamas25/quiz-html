@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: green;
+      margin: 0;
+      padding: 0;
+    }
+    .custom-button {
+      width: 130px;
+      height: 44px;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 20px;
+    }
+    .custom-button:hover {
+      background-color: red;
+    }
+    #quiz-container {
+      display: none;
+      padding: 20px;
+      background: #fff;
+      width: 100vw;
+      box-sizing: border-box;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      font-weight: normal;
+      display: block;
+    }
+    .submit-button, .review-button, .home-button {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+    .submit-button { background-color: blue; color: white; }
+    .review-button { background-color: green; color: white; }
+    .home-button { background-color: red; color: white; }
+    #result-message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    #loadingSpinner {
+      display: none;
+      margin: 20px auto;
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <button class="custom-button" onclick="promptPassword()">TANGIRA IKIZAMI CYA 1</button>
+
+  <div id="quiz-container">
+    <div id="timer" style="font-weight:bold; margin-bottom: 20px;">IGIHE GISIGAYE: 20:00</div>
+    <div id="question-container"></div>
+    <button class="submit-button" onclick="submitQuiz()">REBA AMANOTA</button>
+    <div id="loadingSpinner"></div>
+    <div id="result-message" style="display: flex; align-items: center; gap: 10px;"></div>
+    <div class="bottom-buttons">
+      <button class="review-button" onclick="reviewAnswers()" style="display:none;">SURA IBISUBIZO</button>
+      <button class="home-button" onclick="goToHome()">GARUKA KU RUPAPURO RWA WIX</button>
+    </div>
+  </div>
+
+  <script>
+    let password = "1234";
+    let quizStarted = false;
+    let currentQuestion = 0;
+    let timerInterval;
+    let timeLeft = 20 * 60;
+    let answers = Array(20).fill(null);
+    let submitted = false;
+
+    const questions = Array.from({ length: 20 }).map((_, i) => ({
+      question: `Ikibazo ${i + 1}`,
+      options: ["Igisubizo A", "Igisubizo B", "Igisubizo C", "Igisubizo D"],
+      correct: 1
+    }));
+
+    function promptPassword() {
+      if (quizStarted) return alert("UMAZE KWINJIRA!");
+      const input = prompt("NYANDIKIRA KURI WHATSAPP 0785677190 CG UMPAMAGARE NGUHE CODE IKWEMERERA GUKORA IKIZAMI!:");
+      if (input === password) {
+        document.getElementById("quiz-container").style.display = "block";
+        quizStarted = true;
+        renderQuestions();
+        startTimer();
+      } else {
+        alert("CODE WANDITSEMO SI YO!");
+      }
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("question-container");
+      container.innerHTML = "";
+      questions.forEach((q, index) => {
+        const html = `<div class="question">
+          <p>${q.question}</p>
+          <div class="options">
+            ${q.options.map((opt, i) => `
+              <label>
+                <input type="radio" name="q${index}" value="${i}" ${answers[index] === i ? "checked" : ""} onclick="saveAnswer(${index}, ${i})"> ${opt}
+              </label>`).join("")}
+          </div>
+        </div>`;
+        container.innerHTML += html;
+      });
+    }
+
+    function saveAnswer(qIndex, optIndex) {
+      answers[qIndex] = optIndex;
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (--timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+        const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+        const seconds = String(timeLeft % 60).padStart(2, "0");
+        document.getElementById("timer").textContent = `IGIHE GISIGAYE: ${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    function submitQuiz() {
+      if (submitted) return alert("NIBA WIFUZA GUSUBIRAMO, ONGERA UTANGIRE!");
+      submitted = true;
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (answers[i] === questions[i].correct) score++;
+      }
+      document.getElementById("loadingSpinner").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("loadingSpinner").style.display = "none";
+        document.querySelector(".review-button").style.display = "inline-block";
+        document.getElementById("result-message").innerHTML =
+          score >= 12
+            ? `<span style='color:green'>WABONYE AMANOTA ${score}/20<br>WATSINZE, KOMEREZA AHO!</span>`
+            : `<span style='color:red'>WABONYE AMANOTA ${score}/20<br>WATSINZWE, UKENEYE KWIHUGURA BIHAGIJE!</span>`;
+      }, 5000);
+    }
+
+    function reviewAnswers() {
+      let output = "";
+      questions.forEach((q, i) => {
+        const correct = q.correct;
+        const user = answers[i];
+        output += `<p><strong>Ikibazo ${i + 1}:</strong> ${q.question}<br>`;
+        q.options.forEach((opt, j) => {
+          const status = j === correct ? "✅" : (j === user ? "❌" : "");
+          output += `${status} ${opt}<br>`;
+        });
+        output += `</p>`;
+      });
+      document.getElementById("question-container").innerHTML = output;
+    }
+
+    function goToHome() {
+      window.location.href = "#your-wix-section";
+    }
+  </script>
+</body>
+</html>
