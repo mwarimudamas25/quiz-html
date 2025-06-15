@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      display: block;
+      margin: 5px 0;
+    }
+    .submit-button, .home-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 20px 10px 0 0;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .home-button {
+      background-color: red;
+    }
+    .spinner {
+      display: none;
+      margin-top: 20px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    #result-message {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #review-button {
+      background-color: green;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-left: 20px;
+      cursor: pointer;
+      display: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>ITOZE GUSUBIZA IBIBAZO UTSINDIRE PROVISOIRE MU GIHE GITO!</h2>
+  <form id="quizForm"></form>
+
+  <button class="submit-button" onclick="submitQuiz()">OHEREZA IBISUBIZO</button>
+  <button id="review-button" onclick="reviewAnswers()">SURA IBISUBIZO</button>
+  <button class="home-button" onclick="goToHome()">GARUKA KU RUPAPURO RWA WIX</button>
+
+  <div class="spinner" id="spinner"></div>
+  <div id="result-message"></div>
+
+  <script>
+    const quizForm = document.getElementById("quizForm");
+    const spinner = document.getElementById("spinner");
+    const resultMessage = document.getElementById("result-message");
+    const reviewButton = document.getElementById("review-button");
+
+    const questions = Array.from({ length: 20 }).map((_, i) => ({
+      question: `Ikibazo ${i + 1}`,
+      options: ["Igisubizo A", "Igisubizo B", "Igisubizo C", "Igisubizo D"],
+      correct: 1
+    }));
+
+    let answers = Array(20).fill(null);
+
+    questions.forEach((q, index) => {
+      const qDiv = document.createElement("div");
+      qDiv.className = "question";
+      qDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>` + q.options.map((opt, i) => `
+        <label>
+          <input type="radio" name="q${index}" value="${i}" onchange="answers[${index}] = ${i}"> ${opt}
+        </label>
+      `).join("");
+      quizForm.appendChild(qDiv);
+    });
+
+    function submitQuiz() {
+      spinner.style.display = "block";
+      resultMessage.innerHTML = "";
+      reviewButton.style.display = "none";
+
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (answers[i] === questions[i].correct) score++;
+      }
+
+      setTimeout(() => {
+        spinner.style.display = "none";
+        reviewButton.style.display = "inline-block";
+        resultMessage.innerHTML = score >= 12
+          ? `<span style="color:green;">WABONYE AMANOTA ${score}/20<br>✅ WATSINZE, KOMEREZA AHO!</span>`
+          : `<span style="color:red;">WABONYE AMANOTA ${score}/20<br>❌ WATSINZWE! UKENEYE KWIHUGURA!</span>`;
+      }, 3000);
+    }
+
+    function reviewAnswers() {
+      questions.forEach((q, index) => {
+        const options = document.getElementsByName(`q${index}`);
+        options.forEach((opt, i) => {
+          if (i === q.correct) {
+            opt.parentNode.style.fontWeight = "bold";
+            opt.parentNode.style.color = "green";
+          } else if (answers[index] === i) {
+            opt.parentNode.style.color = "red";
+          }
+        });
+      });
+    }
+
+    function goToHome() {
+      window.location.href = "#home"; // Replace with real anchor or Wix section ID
+    }
+  </script>
+</body>
+</html>
