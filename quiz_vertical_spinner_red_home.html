@@ -7,10 +7,14 @@
   <title>Ikizamini No.1</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: green;
+        font-family: Arial, sans-serif;
+      font-size: 20px;
+      line-height: 1.5;
+      padding: 20px;
+      background: #fff;
       margin: 0;
-      padding: 0;
+      
+      
     }
     .custom-button {
       width: 130px;
@@ -52,6 +56,7 @@
     .submit-button { background-color: blue; color: white; }
     .review-button { background-color: green; color: white; }
     .home-button { background-color: red; color: white; }
+    .review-button:hover { background-color: red; }
     #result-message {
       margin-top: 20px;
       font-weight: bold;
@@ -96,14 +101,205 @@
     let answers = Array(20).fill(null);
     let submitted = false;
 
-    const questions = Array.from({ length: 20 }).map((_, i) => ({
-      question: `Ikibazo ${i + 1}`,
-      options: ["Igisubizo A", "Igisubizo B", "Igisubizo C", "Igisubizo D"],
-      correct: 1
-    }));
+
+const questions = [
+  {
+    question: "1.Uretse ku byerekeye imihanda iromboreje y’ibisate byinshi n’imihanda yimodoka igice cy’umuhanda kiri hakurya y’umurongo mugari wera ucibwa ku muhanda ngo ugaragaze inkombe mpimbano zawo kigenewe ibi bikurikira:
+",
+    options: [
+      "a) guhagararwamo umwanya muto gusa",
+      "b) guhagararwamo umwanya munini gusa",
+      "c) guhagararwamo umwanya muto n’umunini",
+      "d) nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "2.Amatara ndangaburumbarare agomba kubonwa nijoro igihe ijuru rikeye n’umuyobozi w’ikinyabiziga kiri mu ntera ya:",
+    options: ["a)m 50 nibura", "b)m 100", "c)m 150", "d)m 200 nibura"],
+    correct: 3
+  },
+  {
+    question: "3.Amatara ndangambere na ndanganyuma y’imodoka zitarengeje m 6 z’uburebure na m 2 z’ubugari habariwemo imitwaro kandi nta kindi kinyabiziga kiziritseho ashobora gusimburwa n’amatara yo guhagarara umwanya munini iyo ibyo binyabiziga bihagaze umwanya muto cyangwa munini mu nsisiro bibangikanye ku ruhande rw’umuhanda. Ayo matara arangwa n’amabara akurikira:",
+    options: [
+      "a)umweru cyangwa umuhondo imbere",
+      "b)umutuku cyangwa umuhondo inyuma",
+      "c)A na B ni ibisubizo by’ukuri",
+      "d)nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "4.Imirongo y’ingabo z’igihugu zigendera kuri gahunda n’utundi dutsiko twose tw’abanyamaguru nk’imperekerane cyangwa udutsiko tw’abanyeshuri iyo bitagishoboka kubona neza muri m200, bagaragazwa n’itara ryera imbere naho inyuma ni itara ry’umutuku ariko iyo uburebure bw’iyo mirongo cyangwa bw’utwo dutsiko burenga m6 impande zatwo cyangwa zayo zigaragazwa ku buryo bukurikira:
+.../1",
+    options: [
+      "a)itara rimwe cyangwa menshi yera",
+      "b)amatara menshi y’umuhondo",
+      "c)amatara menshi asa n’icunga rihishije",
+      "d)ibisubizo byose ni byo"
+    ],
+    correct: 3
+  },
+  {
+    question: "5.Ndashaka gukata ibumoso. Imodoka y’icyatsi yaje irahagarara. Ninde ufite uburenganzira bwo gutambuka mbere?<br><img src='https://i.ibb.co/nskN6WXj/Wixcode1-Q5.png" alt="Wixcode1-Q5'>Itegereze iyi foto neza <br>",
+    options: [
+      "a)mfite uburenganzira bwo gutambuka mbere",
+      "b)imodoka y’icyatsi ifite uburenganzira bwo gutambuka mbere",
+      "c)twembi tugomba gutambukana ubwitonzi",
+      "d)nta gisubizo nakimwe kirimo"
+    ],
+    correct: 1
+  },
+
+  {
+    question: "6.Ibinyabiziga bikurikira bigomba kugira ibikoresho by’ihoni byumvikanira mu ntera ya m 20:
+ ",
+    options: [
+      "a)amapikipiki",
+      "b)velomoteri",
+      "c)ibinyabiziga bigendeshwa na moteri bidapakiye",
+      "d)nta gisubizo cy’ukuri kirimo
+"
+    ],
+    correct: 3
+  {
+    question: "7.Uretse ku byerekeye imihanda iromboreje y’ibisate byinshi n’imihanda yimodoka igice cy’umuhanda kiri hakurya y’umurongo mugari wera ucibwa ku muhanda ngo ugaragaze inkombe mpimbano zawo kigenewe ibi bikurikira:
+",
+    options: [
+      "a) guhagararwamo umwanya muto gusa",
+      "b) guhagararwamo umwanya munini gusa",
+      "c) guhagararwamo umwanya muto n’umunini",
+      "d) nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "8.Amatara ndangaburumbarare agomba kubonwa nijoro igihe ijuru rikeye n’umuyobozi w’ikinyabiziga kiri mu ntera ya:",
+    options: ["a)m 50 nibura", "b)m 100", "c)m 150", "d)m 200 nibura"],
+    correct: 3
+  },
+  {
+    question: "9.Amatara ndangambere na ndanganyuma y’imodoka zitarengeje m 6 z’uburebure na m 2 z’ubugari habariwemo imitwaro kandi nta kindi kinyabiziga kiziritseho ashobora gusimburwa n’amatara yo guhagarara umwanya munini iyo ibyo binyabiziga bihagaze umwanya muto cyangwa munini mu nsisiro bibangikanye ku ruhande rw’umuhanda. Ayo matara arangwa n’amabara akurikira:",
+    options: [
+      "a)umweru cyangwa umuhondo imbere",
+      "b)umutuku cyangwa umuhondo inyuma",
+      "c)A na B ni ibisubizo by’ukuri",
+      "d)nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "10.Ndashaka gukata ibumoso. Imodoka y’icyatsi yaje irahagarara. Ninde ufite uburenganzira bwo gutambuka mbere?<br><img src='https://i.ibb.co/nskN6WXj/Wixcode1-Q5.png" alt="Wixcode1-Q5'>Itegereze iyi foto neza <br>",
+    options: [
+      "a)mfite uburenganzira bwo gutambuka mbere",
+      "b)imodoka y’icyatsi ifite uburenganzira bwo gutambuka mbere",
+      "c)twembi tugomba gutambukana ubwitonzi",
+      "d)nta gisubizo nakimwe kirimo":",
+    options: [
+      "a)itara rimwe cyangwa menshi yera",
+      "b)amatara menshi y’umuhondo",
+      "c)amatara menshi asa n’icunga rihishije",
+      "d)ibisubizo byose ni byo"
+    ],
+    correct: 3
+  },
+{
+    question: "11.Uretse ku byerekeye imihanda iromboreje y’ibisate byinshi n’imihanda yimodoka igice cy’umuhanda kiri hakurya y’umurongo mugari wera ucibwa ku muhanda ngo ugaragaze inkombe mpimbano zawo kigenewe ibi bikurikira:",
+    options: [
+      "a) guhagararwamo umwanya muto gusa",
+      "b) guhagararwamo umwanya munini gusa",
+      "c) guhagararwamo umwanya muto n’umunini",
+      "d) nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "12.Amatara ndangaburumbarare agomba kubonwa nijoro igihe ijuru rikeye n’umuyobozi w’ikinyabiziga kiri mu ntera ya:",
+    options: ["a)m 50 nibura", "b)m 100", "c)m 150", "d)m 200 nibura"],
+    correct: 3
+  },
+  {
+    question: "13.Amatara ndangambere na ndanganyuma y’imodoka zitarengeje m 6 z’uburebure na m 2 z’ubugari habariwemo imitwaro kandi nta kindi kinyabiziga kiziritseho ashobora gusimburwa n’amatara yo guhagarara umwanya munini iyo ibyo binyabiziga bihagaze umwanya muto cyangwa munini mu nsisiro bibangikanye ku ruhande rw’umuhanda. Ayo matara arangwa n’amabara akurikira:",
+    options: [
+      "a)umweru cyangwa umuhondo imbere",
+      "b)umutuku cyangwa umuhondo inyuma",
+      "c)A na B ni ibisubizo by’ukuri",
+      "d)nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "14.Imirongo y’ingabo z’igihugu zigendera kuri gahunda n’utundi dutsiko twose tw’abanyamaguru nk’imperekerane cyangwa udutsiko tw’abanyeshuri iyo bitagishoboka kubona neza muri m200, bagaragazwa n’itara ryera imbere naho inyuma ni itara ry’umutuku ariko iyo uburebure bw’iyo mirongo cyangwa bw’utwo dutsiko burenga m6 impande zatwo cyangwa zayo zigaragazwa ku buryo bukurikira:
+.../1",
+    options: [
+      "a)itara rimwe cyangwa menshi yera",
+      "b)amatara menshi y’umuhondo",
+      "c)amatara menshi asa n’icunga rihishije",
+      "d)ibisubizo byose ni byo"
+    ],
+    correct: 3
+  },
+  {
+    question: "15.Ndashaka gukata ibumoso. Imodoka y’icyatsi yaje irahagarara. Ninde ufite uburenganzira bwo gutambuka mbere?<br><img src='https://i.ibb.co/nskN6WXj/Wixcode1-Q5.png" alt="Wixcode1-Q5'>Itegereze iyi foto neza <br>",
+    options: [
+      "a)mfite uburenganzira bwo gutambuka mbere",
+      "b)imodoka y’icyatsi ifite uburenganzira bwo gutambuka mbere",
+      "c)twembi tugomba gutambukana ubwitonzi",
+      "d)nta gisubizo nakimwe kirimo"
+    ],
+    correct: 1
+  },
+{
+    question: "16.Uretse ku byerekeye imihanda iromboreje y’ibisate byinshi n’imihanda yimodoka igice cy’umuhanda kiri hakurya y’umurongo mugari wera ucibwa ku muhanda ngo ugaragaze inkombe mpimbano zawo kigenewe ibi bikurikira:",
+    options: [
+      "a) guhagararwamo umwanya muto gusa",
+      "b) guhagararwamo umwanya munini gusa",
+      "c) guhagararwamo umwanya muto n’umunini",
+      "d) nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "17.Amatara ndangaburumbarare agomba kubonwa nijoro igihe ijuru rikeye n’umuyobozi w’ikinyabiziga kiri mu ntera ya:",
+    options: ["a)m 50 nibura", "b)m 100", "c)m 150", "d)m 200 nibura"],
+    correct: 3
+  },
+  {
+    question: "18.Amatara ndangambere na ndanganyuma y’imodoka zitarengeje m 6 z’uburebure na m 2 z’ubugari habariwemo imitwaro kandi nta kindi kinyabiziga kiziritseho ashobora gusimburwa n’amatara yo guhagarara umwanya munini iyo ibyo binyabiziga bihagaze umwanya muto cyangwa munini mu nsisiro bibangikanye ku ruhande rw’umuhanda. Ayo matara arangwa n’amabara akurikira:",
+    options: [
+      "a)umweru cyangwa umuhondo imbere",
+      "b)umutuku cyangwa umuhondo inyuma",
+      "c)A na B ni ibisubizo by’ukuri",
+      "d)nta gisubizo cy’ukuri kirimo"
+    ],
+    correct: 2
+  },
+  {
+    question: "19.Imirongo y’ingabo z’igihugu zigendera kuri gahunda n’utundi dutsiko twose tw’abanyamaguru nk’imperekerane cyangwa udutsiko tw’abanyeshuri iyo bitagishoboka kubona neza muri m200, bagaragazwa n’itara ryera imbere naho inyuma ni itara ry’umutuku ariko iyo uburebure bw’iyo mirongo cyangwa bw’utwo dutsiko burenga m6 impande zatwo cyangwa zayo zigaragazwa ku buryo bukurikira:
+.../1",
+    options: [
+      "a)itara rimwe cyangwa menshi yera",
+      "b)amatara menshi y’umuhondo",
+      "c)amatara menshi asa n’icunga rihishije",
+      "d)ibisubizo byose ni byo"
+    ],
+    correct: 3
+  },
+  {
+    question: "20.Ndashaka gukata ibumoso. Imodoka y’icyatsi yaje irahagarara. Ninde ufite uburenganzira bwo gutambuka mbere?<br><img src='https://i.ibb.co/nskN6WXj/Wixcode1-Q5.png" alt="Wixcode1-Q5'>Itegereze iyi foto neza <br>",
+    options: [
+      "a)mfite uburenganzira bwo gutambuka mbere",
+      "b)imodoka y’icyatsi ifite uburenganzira bwo gutambuka mbere",
+      "c)twembi tugomba gutambukana ubwitonzi",
+      "d)nta gisubizo nakimwe kirimo"
+    ],
+    correct: 1
+  },
+  }
+];
 
     function promptPassword() {
-      if (quizStarted) return alert("UMAZE KWINJIRA!");
+      if (quizStarted) return alert("IKIZAMI CYAMAZE GUTANGIRA!");
       const input = prompt("NYANDIKIRA KURI WHATSAPP 0785677190 CG UMPAMAGARE NGUHE CODE IKWEMERERA GUKORA IKIZAMI!:");
       if (input === password) {
         document.getElementById("quiz-container").style.display = "block";
@@ -149,7 +345,7 @@
     }
 
     function submitQuiz() {
-      if (submitted) return alert("NIBA WIFUZA GUSUBIRAMO, ONGERA UTANGIRE!");
+      if (submitted) return alert("IKIZAMI CYAMAZE KOHEREZWA, ONGERA UTANGIRE!");
       submitted = true;
       let score = 0;
       for (let i = 0; i < questions.length; i++) {
@@ -182,7 +378,7 @@
     }
 
     function goToHome() {
-      window.location.href = "#your-wix-section";
+      window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas25-1#quiz-no2";
     }
   </script>
 </body>
