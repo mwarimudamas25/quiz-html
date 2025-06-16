@@ -55,6 +55,7 @@
     }
     .submit-button { background-color: blue; color: white; }
     .review-button { background-color: green; color: white; }
+    .home-button { background-color: yellow; color: white; }
     .home-button { background-color: red; color: white; }
     .review-button:hover { background-color: red; }
     #result-message {
@@ -88,7 +89,9 @@
     <div id="result-message" style="display: flex; align-items: center; gap: 10px;"></div>
     <div class="bottom-buttons">
       <button class="review-button" onclick="reviewAnswers()" style="display:none;">SURA IBISUBIZO</button>
-      <button class="home-button" onclick="goToHome()">GARUKA KU RUPAPURO RWA WIX</button>
+      <button class="home-button" onclick="goToHome()">JYA KU KINDI KIZAMI</button>
+     <button class="home-button" onclick="goToHome()">SOHOKA</button>
+    </div>
     </div>
   </div>
 
@@ -284,7 +287,6 @@ const questions = [
       "d)nta gisubizo nakimwe kirimo"
     ],
     correct: 1
-  },
   }
 ];
 
@@ -369,6 +371,7 @@ const questions = [
 
     function goToHome() {
       window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas25-1#quiz-no2";
+      window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas25-1#quiz-no1";
     }
   </script>
 </body>
