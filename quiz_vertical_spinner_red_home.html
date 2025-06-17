@@ -380,19 +380,23 @@ const questions = [
     }
 
     function reviewAnswers() {
-      let output = "";
-      questions.forEach((q, i) => {
-        const correct = q.correct;
-        const user = answers[i];
-        output += `<p><strong>Ikibazo ${i + 1}:</strong> ${q.question}<br>`;
-        q.options.forEach((opt, j) => {
-          const status = j === correct ? "✅" : (j === user ? "❌" : "");
-          output += `${status} ${opt}<br>`;
-        });
-        output += `</p>`;
-      });
-      document.getElementById("question-container").innerHTML = output;
-    }
+  let output = "";
+  questions.forEach((q, i) => {
+    const correct = q.correct;
+    const user = answers[i];
+    output += `<p><strong>Ikibazo ${i + 1}:</strong> ${q.question}<br>`;
+    q.options.forEach((opt, j) => {
+      const status = j === correct ? "✅" : (j === user ? "❌" : "");
+      output += `${status} ${opt}<br>`;
+    });
+    output += `</p>`;
+  });
+  document.getElementById("question-container").innerHTML = output;
+
+  // Scroll to the top of the page after rendering answers
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 
    function exitQuiz() {
       location.reload();
