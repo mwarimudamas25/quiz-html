@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <title>Ikizamini</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    h2 {
+      color: #333;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>1. Umurwa mukuru w’u Rwanda ni uwuhe?</h2>
+  <button onclick="answer(0)">Kigali</button><br>
+  <button onclick="answer(1)">Butare</button><br>
+  <button onclick="answer(2)">Rubavu</button><br>
+  <button onclick="answer(3)">Musanze</button><br>
+
+  <p id="feedback"></p>
+
+  <script>
+    function answer(choice) {
+      const correct = 0;
+      const feedback = document.getElementById("feedback");
+      if (choice === correct) {
+        feedback.textContent = "Ni byo! Amanota yawe: 1/1";
+        feedback.style.color = "green";
+      } else {
+feedback.textContent = "Oya, si cyo. Igisubizo nyacyo ni Kigali.";
+        feedback.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
