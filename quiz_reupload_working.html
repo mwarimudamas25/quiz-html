@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.1</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: green;
+      padding: 20px;
+    }
+    .custom-button {
+      width: 130px;
+      height: 44px;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    .custom-button:hover {
+      background-color: red;
+    }
+    #quiz-container {
+      display: none;
+      margin-top: 20px;
+      background: #fff;
+      padding: 20px;
+      line-height: 1.5;
+      font-size: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .options label {
+      font-weight: normal;
+      display: block;
+    }
+    .navigation-buttons {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    .submit-button {
+      background-color: blue;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    .exit-button {
+      background-color: darkred;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    #progress-bar {
+      height: 5px;
+      background: green;
+      width: 0;
+      transition: width 5s linear;
+    }
+    #result-message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <button class="custom-button" onclick="promptPassword()">TANGIRA IKIZAMI CYA 1</button>
+
+  <div id="quiz-container">
+    <div id="timer" style="font-weight:bold; margin-bottom: 20px;">IGIHE GISIGAYE: 20:00</div>
+    <div id="question-container"></div>
+    <div class="navigation-buttons">
+      <button onclick="prevQuestion()">Ikibazo Kibanza</button>
+      <button onclick="nextQuestion()">Ikibazo Gikurikira</button>
+    </div>
+    <br />
+    <button class="submit-button" onclick="submitQuiz()">REBA AMANOTA</button>
+    <button class="exit-button" onclick="exitQuiz()">SOHOKA</button>
+    <div id="progress-bar"></div>
+    <div id="result-message"></div>
+  </div>
+
+  <script>
+    let password = "1234";
+    let quizStarted = false;
+    let currentQuestion = 0;
+    let timerInterval;
+    let timeLeft = 20 * 60;
+    let answers = Array(20).fill(null);
+    let submitted = false;
+
+    const questions = Array.from({ length: 20 }).map((_, i) => ({
+      question: `Ikibazo ${i + 1}`,
+      options: ["Igisubizo A", "Igisubizo B", "Igisubizo C", "Igisubizo D"],
+      correct: 1
+    }));
+
+    function promptPassword() {
+      if (quizStarted) return alert("UMAZE KWINJIRA!");
+      const input = prompt("NYANDIKIRA KURI WHATSAPP 0785677190 CG UMPAMAGARE NGUHE CODE IKWEMERERA GUKORA IKIZAMI!:");
+      if (input === password) {
+        document.getElementById("quiz-container").style.display = "block";
+        quizStarted = true;
+        renderQuestion();
+        startTimer();
+      } else {
+        alert("CODE WANDITSEMO SI YO!");
+      }
+    }
+
+    function renderQuestion() {
+      const q = questions[currentQuestion];
+      const container = document.getElementById("question-container");
+      container.innerHTML = `<div class="question">
+        <p>${q.question}</p>
+        <div class="options">
+          ${q.options
+            .map((opt, i) => `
+              <label>
+                <input type="radio" name="q${currentQuestion}" value="${i}" ${answers[currentQuestion] === i ? "checked" : ""} onclick="saveAnswer(${i})"> ${opt}
+              </label>`)
+            .join("")}
+        </div>
+      </div>`;
+    }
+
+    function saveAnswer(index) {
+      answers[currentQuestion] = index;
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+      }
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (--timeLeft <= 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+        const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+        const seconds = String(timeLeft % 60).padStart(2, "0");
+        document.getElementById("timer").textContent = `IGIHE GISIGAYE: ${minutes}:${seconds}`;
+      }, 1000);
+    }
+
+    function submitQuiz() {
+      if (submitted) return alert("NIBA WIFUZA GUSUBIRAMO, SOHOKA WONGERE UTANGIRE!");
+      submitted = true;
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (answers[i] === questions[i].correct) score++;
+      }
+      document.getElementById("progress-bar").style.width = "100%";
+      setTimeout(() => {
+        document.getElementById("result-message").innerHTML =
+          score >= 12
+            ? `<span style='color:green'>WABONYE AMANOTA ${score}/20<br>WATSINZE, KOMEREZA AHO!</span>`
+            : `<span style='color:red'>WABONYE AMANOTA ${score}/20<br>WATSINZWE, UKENEYE KWIHUGURA BIHAGIJE!</span>`;
+      }, 5000);
+    }
+
+    function exitQuiz() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
