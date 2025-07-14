@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <title>Styled Quiz with Button Options</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+      font-size: 18px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .option-button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      background-color: white;
+      cursor: pointer;
+      text-align: left;
+      font-size: 16px;
+    }
+    .option-button:hover {
+      background-color: #eef;
+    }
+    .option-button.correct {
+      background-color: #c8f7c5 !important;
+      border-color: green;
+    }
+    .option-button.wrong {
+      background-color: #f7c5c5 !important;
+      border-color: red;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+    .submit-button {
+      padding: 10px 20px;
+      background-color: blue;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .submit-button:hover {
+      background-color: darkblue;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>IKIZAMI: HITAMO IGISUBIZO KIMWE GIKWIYE</h2>
+  <form id="quizForm">
+
+    <div class="question" id="question1">
+      <p>Ikibazo 1: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q1A">
+          <input type="radio" name="q1" value="A" onclick="highlightAnswer(1, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q1B">
+          <input type="radio" name="q1" value="B" onclick="highlightAnswer(1, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q1C">
+          <input type="radio" name="q1" value="C" onclick="highlightAnswer(1, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q1D">
+          <input type="radio" name="q1" value="D" onclick="highlightAnswer(1, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question2">
+      <p>Ikibazo 2: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q2A">
+          <input type="radio" name="q2" value="A" onclick="highlightAnswer(2, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q2B">
+          <input type="radio" name="q2" value="B" onclick="highlightAnswer(2, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q2C">
+          <input type="radio" name="q2" value="C" onclick="highlightAnswer(2, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q2D">
+          <input type="radio" name="q2" value="D" onclick="highlightAnswer(2, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question3">
+      <p>Ikibazo 3: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q3A">
+          <input type="radio" name="q3" value="A" onclick="highlightAnswer(3, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q3B">
+          <input type="radio" name="q3" value="B" onclick="highlightAnswer(3, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q3C">
+          <input type="radio" name="q3" value="C" onclick="highlightAnswer(3, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q3D">
+          <input type="radio" name="q3" value="D" onclick="highlightAnswer(3, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question4">
+      <p>Ikibazo 4: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q4A">
+          <input type="radio" name="q4" value="A" onclick="highlightAnswer(4, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q4B">
+          <input type="radio" name="q4" value="B" onclick="highlightAnswer(4, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q4C">
+          <input type="radio" name="q4" value="C" onclick="highlightAnswer(4, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q4D">
+          <input type="radio" name="q4" value="D" onclick="highlightAnswer(4, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question5">
+      <p>Ikibazo 5: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q5A">
+          <input type="radio" name="q5" value="A" onclick="highlightAnswer(5, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q5B">
+          <input type="radio" name="q5" value="B" onclick="highlightAnswer(5, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q5C">
+          <input type="radio" name="q5" value="C" onclick="highlightAnswer(5, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q5D">
+          <input type="radio" name="q5" value="D" onclick="highlightAnswer(5, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question6">
+      <p>Ikibazo 6: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q6A">
+          <input type="radio" name="q6" value="A" onclick="highlightAnswer(6, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q6B">
+          <input type="radio" name="q6" value="B" onclick="highlightAnswer(6, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q6C">
+          <input type="radio" name="q6" value="C" onclick="highlightAnswer(6, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q6D">
+          <input type="radio" name="q6" value="D" onclick="highlightAnswer(6, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question7">
+      <p>Ikibazo 7: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q7A">
+          <input type="radio" name="q7" value="A" onclick="highlightAnswer(7, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q7B">
+          <input type="radio" name="q7" value="B" onclick="highlightAnswer(7, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q7C">
+          <input type="radio" name="q7" value="C" onclick="highlightAnswer(7, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q7D">
+          <input type="radio" name="q7" value="D" onclick="highlightAnswer(7, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question8">
+      <p>Ikibazo 8: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q8A">
+          <input type="radio" name="q8" value="A" onclick="highlightAnswer(8, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q8B">
+          <input type="radio" name="q8" value="B" onclick="highlightAnswer(8, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q8C">
+          <input type="radio" name="q8" value="C" onclick="highlightAnswer(8, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q8D">
+          <input type="radio" name="q8" value="D" onclick="highlightAnswer(8, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question9">
+      <p>Ikibazo 9: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q9A">
+          <input type="radio" name="q9" value="A" onclick="highlightAnswer(9, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q9B">
+          <input type="radio" name="q9" value="B" onclick="highlightAnswer(9, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q9C">
+          <input type="radio" name="q9" value="C" onclick="highlightAnswer(9, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q9D">
+          <input type="radio" name="q9" value="D" onclick="highlightAnswer(9, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question10">
+      <p>Ikibazo 10: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q10A">
+          <input type="radio" name="q10" value="A" onclick="highlightAnswer(10, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q10B">
+          <input type="radio" name="q10" value="B" onclick="highlightAnswer(10, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q10C">
+          <input type="radio" name="q10" value="C" onclick="highlightAnswer(10, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q10D">
+          <input type="radio" name="q10" value="D" onclick="highlightAnswer(10, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question11">
+      <p>Ikibazo 11: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q11A">
+          <input type="radio" name="q11" value="A" onclick="highlightAnswer(11, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q11B">
+          <input type="radio" name="q11" value="B" onclick="highlightAnswer(11, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q11C">
+          <input type="radio" name="q11" value="C" onclick="highlightAnswer(11, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q11D">
+          <input type="radio" name="q11" value="D" onclick="highlightAnswer(11, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question12">
+      <p>Ikibazo 12: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q12A">
+          <input type="radio" name="q12" value="A" onclick="highlightAnswer(12, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q12B">
+          <input type="radio" name="q12" value="B" onclick="highlightAnswer(12, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q12C">
+          <input type="radio" name="q12" value="C" onclick="highlightAnswer(12, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q12D">
+          <input type="radio" name="q12" value="D" onclick="highlightAnswer(12, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question13">
+      <p>Ikibazo 13: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q13A">
+          <input type="radio" name="q13" value="A" onclick="highlightAnswer(13, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q13B">
+          <input type="radio" name="q13" value="B" onclick="highlightAnswer(13, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q13C">
+          <input type="radio" name="q13" value="C" onclick="highlightAnswer(13, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q13D">
+          <input type="radio" name="q13" value="D" onclick="highlightAnswer(13, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question14">
+      <p>Ikibazo 14: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q14A">
+          <input type="radio" name="q14" value="A" onclick="highlightAnswer(14, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q14B">
+          <input type="radio" name="q14" value="B" onclick="highlightAnswer(14, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q14C">
+          <input type="radio" name="q14" value="C" onclick="highlightAnswer(14, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q14D">
+          <input type="radio" name="q14" value="D" onclick="highlightAnswer(14, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question15">
+      <p>Ikibazo 15: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q15A">
+          <input type="radio" name="q15" value="A" onclick="highlightAnswer(15, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q15B">
+          <input type="radio" name="q15" value="B" onclick="highlightAnswer(15, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q15C">
+          <input type="radio" name="q15" value="C" onclick="highlightAnswer(15, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q15D">
+          <input type="radio" name="q15" value="D" onclick="highlightAnswer(15, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question16">
+      <p>Ikibazo 16: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q16A">
+          <input type="radio" name="q16" value="A" onclick="highlightAnswer(16, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q16B">
+          <input type="radio" name="q16" value="B" onclick="highlightAnswer(16, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q16C">
+          <input type="radio" name="q16" value="C" onclick="highlightAnswer(16, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q16D">
+          <input type="radio" name="q16" value="D" onclick="highlightAnswer(16, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question17">
+      <p>Ikibazo 17: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q17A">
+          <input type="radio" name="q17" value="A" onclick="highlightAnswer(17, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q17B">
+          <input type="radio" name="q17" value="B" onclick="highlightAnswer(17, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q17C">
+          <input type="radio" name="q17" value="C" onclick="highlightAnswer(17, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q17D">
+          <input type="radio" name="q17" value="D" onclick="highlightAnswer(17, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question18">
+      <p>Ikibazo 18: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q18A">
+          <input type="radio" name="q18" value="A" onclick="highlightAnswer(18, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q18B">
+          <input type="radio" name="q18" value="B" onclick="highlightAnswer(18, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q18C">
+          <input type="radio" name="q18" value="C" onclick="highlightAnswer(18, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q18D">
+          <input type="radio" name="q18" value="D" onclick="highlightAnswer(18, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question19">
+      <p>Ikibazo 19: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q19A">
+          <input type="radio" name="q19" value="A" onclick="highlightAnswer(19, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q19B">
+          <input type="radio" name="q19" value="B" onclick="highlightAnswer(19, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q19C">
+          <input type="radio" name="q19" value="C" onclick="highlightAnswer(19, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q19D">
+          <input type="radio" name="q19" value="D" onclick="highlightAnswer(19, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <div class="question" id="question20">
+      <p>Ikibazo 20: Ni irihe gisubizo gikwiye?</p>
+      
+        <label class="option-button" id="q20A">
+          <input type="radio" name="q20" value="A" onclick="highlightAnswer(20, 'A')"> A) Igisubizo cya A
+        </label>
+        
+        <label class="option-button" id="q20B">
+          <input type="radio" name="q20" value="B" onclick="highlightAnswer(20, 'B')"> B) Igisubizo cya B
+        </label>
+        
+        <label class="option-button" id="q20C">
+          <input type="radio" name="q20" value="C" onclick="highlightAnswer(20, 'C')"> C) Igisubizo cya C
+        </label>
+        
+        <label class="option-button" id="q20D">
+          <input type="radio" name="q20" value="D" onclick="highlightAnswer(20, 'D')"> D) Igisubizo cya D
+        </label>
+        
+    </div>
+    
+    <button type="button" class="submit-button" onclick="submitQuiz()">OHEREZA IBISUBIZO</button>
+  </form>
+  <div id="result"></div>
+<script>
+  const correctAnswers = {
+    q1: 'C',
+    q2: 'C',
+    q3: 'C',
+    q4: 'C',
+    q5: 'C',
+    q6: 'C',
+    q7: 'C',
+    q8: 'C',
+    q9: 'C',
+    q10: 'C',
+    q11: 'C',
+    q12: 'C',
+    q13: 'C',
+    q14: 'C',
+    q15: 'C',
+    q16: 'C',
+    q17: 'C',
+    q18: 'C',
+    q19: 'C',
+    q20: 'C',
+  };
+
+  const answered = {};
+
+  function highlightAnswer(q, ans) {
+    if (answered[q]) return;
+    const correct = correctAnswers["q" + q];
+    document.getElementsByName("q" + q).forEach((input) => {
+      input.disabled = true;
+      let id = "q" + q + input.value;
+      let label = document.getElementById(id);
+      if (input.value === correct) {
+        label.classList.add("correct");
+      } else if (input.checked) {
+        label.classList.add("wrong");
+      }
+    });
+    answered[q] = true;
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    for (let i = 1; i <= 20; i++) {
+      const selected = document.querySelector('input[name="q' + i + '"]:checked');
+      if (selected && selected.value === correctAnswers["q" + i]) {
+        score++;
+      }
+    }
+    document.getElementById("result").innerText = "WABONYE AMANOTA: " + score + "/20";
+  }
+</script>
+</body>
+</html>
