@@ -1,10 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="rw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ikizamini No.1</title>
+  <title>Ikizamini No.4</title>
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<script>
+  document.addEventListener("copy", function(e) {
+    e.preventDefault();
+    alert("Copying is disabled!");
+  });
+</script>
+
   <style>
     body {
         font-family: Arial, sans-serif;
@@ -17,8 +24,8 @@
       
     }
     .custom-button {
-      width: 130px;
-      height: 44px;
+      width: 160px;
+      height: 50px;
       background-color: blue;
       color: white;
       border: none;
@@ -66,7 +73,7 @@
       background-color: green;
       color: white;
       margin-top: 10px;
-  }
+   }
    
     #loadingSpinner {
       display: none;
@@ -82,28 +89,132 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+     .warning-text {
+    color: red;
+    font-weight: bold;
+    animation: shake 0.5s ease-in-out;
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+    }
   </style>
 </head>
 <body>
-<h2>ITOZE GUSUBIZA IBIBAZO UTSINDIRE PROVISOIRE MU GIHE GITO!</h2>
-<p>IKIZAMI KIMARA IMINOTA 20, BURI KIBAZO GIFITE INOTA 1</p>
-  <button class="custom-button" onclick="promptPassword()">TANGIRA IKIZAMI CYA 1</button>
+  <h2>ITOZE GUSUBIZA IBIBAZO UTSINDIRE PROVISOIRE MU GIHE GITO!</h2>
+  <button class="custom-button" onclick="promptPassword()">Tangira Ikizami Cya 4</button>
+<!-- Password Modal -->
+<div id="password-modal">
+  <div class="modal-content">
+    <span onclick="closeModal()" class="close-btn">&times;</span>
+ <h3>SHYIRAMO KODE IKWEMERERA GUKORA IKI KIZAMI</h3>
+<input type="password" id="password-input" placeholder="ANDIKA IYO KODE HANO">
+<br><br>
+<button id="confirmBtn" onclick="checkPassword()">EMEZA NYUMA YO KWANDIKAMO KODE</button>
+<br><br>
+<button id="sectionBtn1" onclick="exitToSection1()">KANDA HANO USABE KODE</button>
+<br><br>
+<button id="sectionBtn2" onclick="exitToSection2()">KANDA HANO UBANZE WIHUGURE</button>
+<br><br>
+
+<button id="exitGoBackBtn" onclick="closeModal()">SOHOKA NIBA UDASHAKA GUKOMEZA</button>   
+   
+  </div>
+</div>
+<style>
+  #password-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  overflow: auto; /* Enable scrolling if content too long */
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+  }
+ .modal-content input {
+    width: 90%;
+    padding: 10px;
+    font-size: 10px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 2px;
+    width: 100%;
+  }
+
+  #confirmBtn {
+    background-color: #007bff;
+  }
+  #confirmBtn:hover {
+    background-color: #0056b3;
+  }
+    #sectionBtn1 {
+    background-color: green;
+  }
+  #sectionBtn1:hover {
+    background-color: #006400;
+  }
+  #sectionBtn2 {
+    background-color: gray;
+ }
+ #sectionBtn2:hover {
+    background-color: #555;
+ }
+  #exitGoBackBtn {
+    background-color: darkred;
+ }
+  #exitGoBackBtn:hover {
+    background-color: #b30000;
+  }
+
+  .close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+</style>
 
   <div id="quiz-container">
-    <div id="timer" style="font-weight:bold; margin-bottom: 20px;">IGIHE GISIGAYE: 20:00</div>
+<p id="quiz-started-msg" class="warning-text">Ikizami Cyamaze Gutangira...</p>
+<div id="timer" style="font-weight: bold; margin-bottom: 20px; color: red;">
+  Igihe Gisigaye: 20:00
+</div>
+<p>Ikizami Kigizwe n'Ibibazo 20, Buri Kibazo Gifite Inota 1, Kikamara Iminota 20. Amahirwe Masa!!!</p>
     <div id="question-container"></div>
     <button class="submit-button" onclick="submitQuiz()">OHEREZA UBONE AMANOTA YAWE</button>
-    <button class="home-button" onclick="goToHome()">SOHOKA UJYE NO KU BINDI BIZAMI</button>
+    <button class="home-button" onclick="goToHome()">SOHOKA/SUBIRA KU BIZAMI</button>
     <div id="loadingSpinner"></div>
     <div id="result-message" style="display: flex; align-items: center; gap: 10px;"></div>
     <div class="bottom-buttons">
-      <button class="review-button" onclick="reviewAnswers()" style="display:none;">REBA IBISUBIZO</button>
+      <button class="review-button" onclick="reviewAnswers()" style="display:none;">REBA IBISUBIZO BYOSE</button>
     </div>
     </div>
   </div>
-
   <script>
-    let password = "91407";
+    let password = "45522";
     let quizStarted = false;
     let currentQuestion = 0;
     let timerInterval;
@@ -111,220 +222,134 @@
     let answers = Array(20).fill(null);
     let submitted = false;
 
-
 const questions = [
   {
-    question: "1. Uretse ku byerekeye imihanda iromboreje y’ibisate byinshi n’imihanda yimodoka igice cy’umuhanda kiri hakurya y’umurongo mugari wera ucibwa ku muhanda ngo ugaragaze inkombe mpimbano zawo kigenewe ibi bikurikira:",
-    options: [
-      "a) Guhagararwamo umwanya muto gusa",
-      "b) Guhagararwamo umwanya munini gusa",
-      "c) Guhagararwamo umwanya muto n’umunini",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 2
+    question: "1. Amabwiriza rusange agenga imihanda n'uburyo bwo kuyigendamo mu Rwanda yashyizweho muri:",
+    options: ["a) 1992", "b) 2002", "c) 1987", "d) 1998"],
+    correct: 1
   },
   {
-    question: "2. Amatara ndangaburumbarare agomba kubonwa nijoro igihe ijuru rikeye n’umuyobozi w’ikinyabiziga kiri mu ntera ya:",
-    options: ["a)m 50 nibura", "b)m 100", "c)m 150", "d)m 200 nibura"],
+    question: "2. Amabwiriza rusange agenga imihanda n'uburyo bwo kuyigendamo agenga uburyo bwo kugenda mu nzira nyabagendwa bwerekeye:",
+    options: ["a) Abanyamaguru", "b) Inyamaswa ziba mu ishyamba", "c) Ibinyabiziga", "d) A na C ni ibisubizo by’ukuri"],
     correct: 3
   },
   {
-    question: "3. Amatara ndangambere na ndanganyuma y’imodoka zitarengeje m 6 z’uburebure na m 2 z’ubugari habariwemo imitwaro kandi nta kindi kinyabiziga kiziritseho ashobora gusimburwa n’amatara yo guhagarara umwanya munini iyo ibyo binyabiziga bihagaze umwanya muto cyangwa munini mu nsisiro bibangikanye ku ruhande rw’umuhanda. Ayo matara arangwa n’amabara akurikira:",
-    options: [
-      "a) Umweru cyangwa umuhondo imbere",
-      "b) Umutuku cyangwa umuhondo inyuma",
-      "c) a na b ni ibisubizo by’ukuri",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
+    question: "3. Ijambo 'Inzira nyabagendwa' risobanura kimwe muri ibi bikurikira:",
+    options: ["a) Ahantu imodoka zihagarara gusa", "b) Ahantu hose abantu nyamwinshi bahurira no kugenda ku butaka", "c) Imihanda minini gusa", "d) Utuyira tw’imodoka mu mujyi no mu cyaro"],
+    correct: 1
+  },
+  {
+    question: "4. Ijambo 'Umuhanda' risobanura:",
+    options: ["a) Ahantu hose abantu banyura cg ahantu hose hateretse ibinyabiziga", "b) Igice cy’inzira nyabagendwa kigendwamo n’ibinyabiziga", "c) Inzira z’abanyamaguru gusa", "d) Nta gisubizo cy’ukuri kirimo"],
+    correct: 1
+  },
+  {
+    question: "5. Ijambo 'Inzira y'ibinyabiziga' risobanura:",
+    options: ["a) Umuhanda n’inzira ziwukikije", "b) Ahantu hagendwa n’abanyamaguru gusa", "c) Ahantu imodoka zihagarara", "d) Utuyira duto two mu mujyi"],
+    correct: 0
+  },
+  {
+    question: "6. Iyo bavuze Igisate cy'umuhanda wumva kimwe muri ibi bikurikira:",
+    options: ["a) Igice cy’umuhanda kigenewe abanyamaguru gusa", "b) Ahantu imodoka zihagarara", "c) Igice cy’umuhanda cyagenewe kugendwamo n’ibinyabiziga binini bibangikanye", "d) Umurongo ugaragaza aho umuhanda urangirira"],
     correct: 2
   },
   {
-    question: "4. Imirongo y’ingabo z’igihugu zigendera kuri gahunda n’utundi dutsiko twose tw’abanyamaguru nk’imperekerane cyangwa udutsiko tw’abanyeshuri iyo bitagishoboka kubona neza muri m200, bagaragazwa n’itara ryera imbere naho inyuma ni itara ry’umutuku ariko iyo uburebure bw’iyo mirongo cyangwa bw’utwo dutsiko burenga m6 impande zatwo cyangwa zayo zigaragazwa ku buryo bukurikira:",
-    options: [
-      "a) Itara rimwe cyangwa menshi yera",
-      "b) Amatara menshi y’umuhondo",
-      "c) Amatara menshi asa n’icunga rihishije",
-      "d) Ibisubizo byose ni byo"
-    ],
+    question: "7. Ijambo 'Agahanda k'amagare' risobanura iki:",
+    options: ["a) Igice cy’inzira nyabagendwa cyagenewe kunyurwamo n’amagare na velomoteri", "b) Umuhanda wose ugenewe ibinyabiziga byose", "c) Ahantu imodoka zihagarara", "d) Igice cy’umuhanda cyagenewe abanyamaguru"],
+    correct: 0
+  },
+  {
+    question: "8. Amagambo 'Isangano' na 'Inkomane' bivuga:",
+    options: ["a) Ahantu imodoka ziparika", "b) Ahantu hose imihanda ihurira cyangwa aho umuhanda usukira mu wundi", "c) Umuhanda munini ugabanya imijyi ibiri", "d) Igice cy’umuhanda cyagenewe abanyamaguru"],
+    correct: 1
+  },
+  {
+    question: "9. Ijambo 'Akayira' risobanura iki?",
+    options: ["a) Ahantu imodoka zihagarara", "b) Umuhanda munini ugenewe ibinyabiziga byose", "c) Inzira nyabagendwa ifunganye yagenewe gusa abanyamaguru cyangwa ibinyabiziga bigendera ku biziga bibiri", "d) Inzira ya gari ya moshi"],
+    correct: 2
+  },
+  {
+    question: "10. Inzira y’igitaka ni:",
+    options: ["a) Inzira igenewe abantu gusa", "b) Inzira yabugenewe n’abanyamaguru gusa", "c) Inzira nyabagendwa yagutse kurusha akayira ariko itari iy’ibinyabiziga bibiri", "d) Inzira ikoreshwa gusa mu gihe cy’imvura"],
+    correct: 2
+  },
+  {
+    question: "11. Urusisiro ni:",
+    options: ["a) Ahantu hagaragaramo amazu gusa nta mihanda irimo", "b) Ahantu hari amazu atandukanye yegeranye cyangwa afatanye hatagaragazwa n’ibyapa by’aho hantu", "c) Ahantu hatuye abantu bacye cyane hatagira amazu afatanye", "d) Nta gisubizo cy’ukuri kirimo"],
     correct: 3
   },
   {
-    question: "5. Ndashaka gukata ibumoso. Imodoka y’icyatsi yaje irahagarara. Ninde ufite uburenganzira bwo gutambuka mbere?<br><img src='https://i.ibb.co/nskN6WXj/Wixcode1-Q5.png' alt='Wixcode1-Q5'>Itegereze iyi foto neza <br>",
-    options: [
-      "a) Mfite uburenganzira bwo gutambuka mbere",
-      "b) Imodoka y’icyatsi ifite uburenganzira bwo gutambuka mbere",
-      "c) Twembi tugomba gutambukana ubwitonzi",
-      "d) Nta gisubizo nakimwe kirimo"
-    ],
-    correct: 1
-  },
-
-  {
-    question: "6. Ibinyabiziga bikurikira bigomba kugira ibikoresho by’ihoni byumvikanira mu ntera ya m 20:",
-    options: [
-      "a) Amapikipiki",
-      "b) Velomoteri",
-      "c) Ibinyabiziga bigendeshwa na moteri bidapakiye",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 1
-  },
-
-  {
-    question: "7.Icyapa kivuga ko hatanyurwa mu byerekezo byombi kirangwa n’ubuso bw’ibara rikurikira:",
-    options: [
-      "a) Umukara",
-      "b) Umweru",
-      "c) Ubururu",
-      "d) Umutuku"
-    ],
+    question: "12. Ijambo Umuyobozi risobanura:",
+    options: ["a) Umuntu uyobora abandi mu kazi ka Leta", "b) Umuntu wese utwaye ikinyabiziga cyangwa uyobora inyamaswa", "c) Umuntu wicaye mu modoka atari umushoferi", "d) Umuntu ucunga umutekano mu muhanda"],
     correct: 1
   },
   {
-    question: "8. Icyapa kibuza kunyura ku bindi binyabiziga byose uretse ibinyamitende ibiri n’amapikipiki adafite akanyabiziga ku ruhande gifite ibimenyetso by’amabara akurikira:",
-    options: [
-      "a) Umweru n’umukara", 
-      "b) Umutuku n’umukara", 
-      "c) Ubururu",
-      "d) a na b ni ibisubizo by’ukuri"
-    ],
+    question: "13. Iyo umugenzi ahagaze, umukozi ubifitiye ububasha ni ngombwa ko buri gihe aba afite ibimenyetso:",
+    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
     correct: 1
   },
   {
-    question: "9. Amahoni y’ibinyabiziga bigendeshwa na moteri agomba kohereza ijwi ry’injyana imwe rikomeza kandi ridacengera amatwi ariko ibinyabiziga bikurikira bishobora kugira ihoni ridasanzwe ridahuye n’ibivuzwe haruguru:",
-    options: [
-      "a) Ibinyabiziga ndakumirwa",
-      "b) Ibinyabiziga bikora ku mihanda",
-      "c) Ibinyabiziga bifite ubugari burenze m 2.10",
-      "d) a na b ni ibisubizo by’ukuri"
-    ],
+    question: "14. Ugendeye ku gisobanuro k’ijambo ikinyabiziga, Indogobe cyangwa ifarashi ikurura ikinyabiziga si ikinyabiziga:",
+    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
+    correct: 1
+  },
+  {
+    question: "15. Tracteur cg umutraktori, imashini ikoreshwa mu buhinzi ifatwa nk’ikinyabiziga:",
+    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
+    correct: 0
+  },
+  {
+    question: "16. Ikinyamitende kigomba kugira iki muri ibi bikurikira:",
+    options: ["a) Moteri ikoresha lisansi", "b) Ibiziga byibuze kimwe kandi kigendeshwa n’imbaraga z’abantu", "c) Moteri y’amashanyarazi", "d) Imodoka igendeshwa na essence"],
+    correct: 1
+  },
+  {
+    question: "17. Ni ikihe kinyabiziga gishobora no kuba Ikinyamitende muri ibi?:",
+    options: ["a) Moto ifite moteri", "b) Igare ry’abafite ubumuga", "c) Igare rigendera ku biziga bibiri rikoreshejwe n’amaguru", "d) Moto ifite imitende itatu"],
+    correct: 2
+  },
+  {
+    question: "18. Ibi bikurikira ni ibinyabiziga ukuyemo:",
+    options: ["a) Imodoka (Car)", "b) Moto (Motorcycle)", "c) Ibimasa bihinga (Draught cattle)", "d) Igare (Bicycle)"],
+    correct: 2
+  },
+  {
+    question: "19. Ijambo Igare rivuga:",
+    options: ["a) Ikinyamitende gifite ibiziga bibiri cg bitatu", "b) Ikinyamitende gifite ibiziga bibiri gusa", "c) Ikinyamitende gifite moteri", "d) Nta gisubizo cy’ukuri kirimo"],
+    correct: 1
+  },
+  {
+    question: "20. Velomoteri:",
+    options: ["a) Ni ikinyabiziga gifite ibiziga bibiri byonyine", "b) Ni ikinyabiziga kitarengeje santimetero kibe 50", "c) Yihuta kurenza Km 100 mu isaha", "d) A na B ni ibisubizo by’ukuri"],
     correct: 3
-  },
-  {
-    question: "10. Ngomba:<br><img src='https://i.ibb.co/nsqrhbXQ/Wixcode1-Q10.png' alt='Wixcode1-Q10'>Itegereze iyi foto neza <br>",
-    options: [
-      "a) Guhagarara igihe gito kuri icyi cyapa cy’umuhanda",
-      "b) Guhagarara ngatanga inzira kuri metero 100 ntaragera kuri icyi cyapa",
-      "c) Gutanga inzira nkanahagarara iyo ari ngombwa muri m100 ntaragera kuri icyi cyapa",
-      "d) Nta gisubizo na kimwe kirimo",
-    ],
-    correct: 1
-  },
-{
-    question: "11. Amatara ndangacyerekezo agomba kuba agizwe n’ibintu bifashe ku rumuri rumyasa, biringaniye ku buryo bigira umubare utari igiharwe ku mpande z’imbere n’inyuma z’ikinyabiziga ayo matara aba afite amabara akurikira:",
-    options: [
-      "a) Amatara y’imbere aba yera cyangwa ari umuhondo",
-      "b) Ay’inyuma aba atukura cyangwa asa n’icunga rihishije",
-      "c) a na b ni ibisubizo by’ukuri",
-      "d) Ay’inyuma aba asa n’icunga rihishije"
-    ],
-    correct: 2
-  },
-  {
-     question: "12. Ibiziga by’ibinyabiziga bigendeshwa na moteri n’ibya velomoteri kimwe n’ibya romoruki zabyo bigomba kuba byambaye inziga zihagwa zifite amano n’ubujyakuzimu butari munsi ya milimetero imwe ku migongo yabyo yose n’ubudodo bwabyo ntibugire ahantu na hamwe bugaragara kandi ntibugire aho byacitse bikomeye mu mpande zabyo ariko ibyo ntibikurikizwa ku binyabiziga bikurikira:",
-    options: [
-      "a) Ibinyabiziga bidapakiye kandi bitajya birenza umuvuduko wa km 25 mu isaha ahateganye",
-      "b) Ibinyabiziga bya police bijya ahatarenga km 25 uvuye aho biba",
-      "c) a na b ni ibisubizo by’ukuri",
-      "d) Nta gisubizo cy’ukuri kirimo"
-   ],
-    correct: 0
-  },
-  {
-    question: "13. Ahatari mu nsisiro, umuyobozi wese ugenza ikinyabiziga kimwe cyangwa ibinyabiziga bikomatanye bifite uburemere ntarengwa bwemewe burenga ibiro 3500 cyangwa bifite uburebure bwite burenga metero 10 agomba, keretse iyo anyuze cyangwa agiye kunyura ku bindi binyabiziga, gusiga hagati y’ikinyabiziga cye n’ikimuri imbere umwanya uhagije kugira ngo ibinyabiziga bimuhiseho bishobore kuhigobeka bidateje impanuka igihe bibaye ngombwa ariko ibyo ntibikurikizwa mu bihe bikurikira:",
-    options: [
-      "a) Mu gihe ibigendera mu muhanda ari byinshi kimwe no mu duce tw’inzira nyabagendwa aho kunyuranaho bibujijwe",
-      "b) Igihe ibigendera mu muhanda ari byinshi",
-      "c) Mu duce tw’inzira nyabagendwa aho kunyuranaho bibujijwe",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 0
-  },
-  {
-    question: "14. Nta tara na rimwe cyangwa utugarurarumuri bishobora kuba bifunze kuburyo igice cya byo cyo hasi cyane kimurika kitaba kiri hasi ya cm 40 kuva ku butaka igihe ikinyabiziga kidapakiye ariko ibyo ntibikurikizwa ku matara akurikira:",
-    options: [
-      "a) Amatara Kamenabihu",
-      "b) Amatara yo gusubira inyuma",
-      "c) a na b ni ibisubizo by’ukuri",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 2
-  },
-  {
-    question: "15. Mpagaze mu murongo wo guhagarara umwanya muto:<br><img src='https://i.ibb.co/Gv0KvP01/Wixcode1-Q15.png' alt='Wixcode1-Q15'>Itegereze iyi foto neza <br>",
-    options: [
-      "a) Nshobora gukata iburyo",
-      "b) Nshobora gukata ibumoso",
-      "c) Nshobora gukata ibumoso cyangwa iburyo",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 1
-  },
-{
-    question: "16. Ahatari mu nsisiro ibyapa biburira n’ibyapa byo gutambuka mbere bigomba gushyirwa mu ntera ikurikira y’ahantu habyerekana:",
-    options: [
-      "a) Metero 150 kugeza kuri 200",
-      "b) Metero 100 kugeza kuri 150",
-      "c) Metero 50 kugeza kuri 100",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 0
-  },
-  {
-    question:  "17. Inkombe z’inzira nyabagendwa cyangwa z’umuhanda zishobora kugaragazwa n’ibikoresho ngarurarumuri. Ibyo bikoresho bigomba gushyirwaho ku buryo abagenzi babibona ku buryo bukurikira:",
-    options: [
-      "a) Babona iburyo bwabo ibyibara ritukura cyangwa ibisa n’icunga rihishije ",
-      "b) Ibumoso babona iby’ibara ryera",
-      "c) a na b ni ibisubizo by’ukuri",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 2
-  },
-  {
-    question: "18. Iyo tumuritswe n’amatara y’urugendo y’i kinyabiziga utugarurarumuri tugomba n’ijoro, igihe ijuru rikeye kubonwa n’umuyobozi w’ikinyabiziga kiri mu ntera ikurikira:",
-    options: [
-      "a) Metero 100",
-      "b) Metero 150",
-      "c) Metero 200",
-      "d) Nta gisubizo cy’ukuri kirimo"
-    ],
-    correct: 1
-  },
-  {
-    question: "19. Ibinyabiziga bigendeshwa na moteri, hatarimo velomoteri n’ibinyabiziga bidapakiye umuvuduko wabyo udashobora kurenga km 50 mu isaha ahateganye bigomba kuba bifite ibikoresho by’ihoni byumvikanira mu ntera ikurikira:",
-    options: [
-      "a) Metero 200",
-      "b) Metero 150",
-      "c) Metero 100",
-      "d) Metero 50"
-    ],
-    correct: 2
-  },
-  {
-    question: "20. Kuri iki cyapa cyo mu muhanda cya mbere kintegeka:<br><img src='https://i.ibb.co/k687LwX5/Wixcode1-Q20.png' alt='Wixcode1-Q20'>Itegereze iyi foto neza <br>",
-    options: [
-      "a) Kugendera ku muvuduko uri hejuru ya km 30/h",
-      "b) Kutarenza umuvuduko wa km 30/h",
-      "c) Birabujijwe kugendera kumuvuduko uri hejuru ya km 30/h",
-      "d) Nta gisubizo cyukuri kirimo"
-    ],
-    correct: 2
   }
 ];
 
-    function promptPassword() {
-      if (quizStarted) return alert("IKIZAMI CYAMAZE GUTANGIRA!");
-      const input = prompt("NYANDIKIRA KURI WHATSAPP 0785677190 CG UMPAMAGARE NGUHE CODE IKWEMERERA GUKORA IKIZAMI!:");
-      if (input === password) {
-        document.getElementById("quiz-container").style.display = "block";
-        quizStarted = true;
-        renderQuestions();
-        startTimer();
-      } else {
-        alert("CODE WANDITSEMO SI YO!");
-      }
-    }
 
+  function promptPassword() {
+  if (quizStarted) {
+    alert("Ikizami Cyamaze Gutangira! kanda OK ukomeze cg ujye kuri SOHOKA/SUBIRA KU BIZAMI usubire ku bizami wongere utangire");
+    return;
+  }
+  document.getElementById("password-modal").style.display = "block";
+}
+
+function checkPassword() {
+  const inputField = document.getElementById("password-input");
+  const input = inputField.value;
+
+  if (input === password) {
+    document.getElementById("password-modal").style.display = "none";
+    document.getElementById("quiz-container").style.display = "block";
+    quizStarted = true;
+    renderQuestions();
+    startTimer();
+  } else {
+    alert("Andikamo Kode Ya Nyayo Cg Ujye ahanditse KANDA HANO USABE KODE TUGUFASHE!");
+    inputField.value = "";       // isiba automatic
+    inputField.focus();          // cursor isubira mu kibuga
+  }
+}
     function renderQuestions() {
       const container = document.getElementById("question-container");
       container.innerHTML = "";
@@ -354,28 +379,29 @@ const questions = [
         }
         const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
         const seconds = String(timeLeft % 60).padStart(2, "0");
-        document.getElementById("timer").textContent = `IGIHE GISIGAYE: ${minutes}:${seconds}`;
+        document.getElementById("timer").textContent = `Igihe Gisigaye: ${minutes}:${seconds}`;
       }, 1000);
     }
 
     function submitQuiz() {
-      if (submitted) return alert("IKIZAMI CYAMAZE KOHEREZWA, SOHOKA WONGERA UTANGIRE!");
+      if (submitted) return alert("Ikizami Cyamaze Koherezwa, Kanda kuri OK ujye kuri SOHOKA/SUBIRA KU BIZAMI wongere utangire !");
       submitted = true;
       let score = 0;
       for (let i = 0; i < questions.length; i++) {
         if (answers[i] === questions[i].correct) score++;
       }
-      document.getElementById("loadingSpinner").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("loadingSpinner").style.display = "none";
-        document.querySelector(".review-button").style.display = "inline-block";
-        document.getElementById("result-message").innerHTML =
-          score >= 12
-            ? `<span style='color:green'>WABONYE AMANOTA ${score}/20<br>WATSINZE, KOMEREZA AHO!</span>`
-            : `<span style='color:red'>WABONYE AMANOTA ${score}/20<br>WATSINZWE, UKENEYE KWIHUGURA BIHAGIJE!</span>`;
-      }, 5000);
-    }
-
+          document.getElementById("loadingSpinner").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("loadingSpinner").style.display = "none";
+      document.querySelector(".review-button").style.display = "inline-block";
+      const resultMessage = document.getElementById("result-message");
+      resultMessage.innerHTML =
+        score >= 12
+          ? `<span style='color:green'>Wabonye Amanota ${score}/20<br>Watsinze, Komereza Aho!</span>`
+          : `<span style='color:red'>Wabonye Amanota${score}/20<br>Watsinzwe, Ukeneye Kwihugura Bihagije!</span>`;
+      resultMessage.scrollIntoView({ behavior: "smooth" });
+    }, 5000);
+  }
     function reviewAnswers() {
   let output = "";
   questions.forEach((q, i) => {
@@ -389,13 +415,34 @@ const questions = [
     output += `</p>`;
   });
   document.getElementById("question-container").innerHTML = output;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+}
+setTimeout(function() {
+  const msg = document.getElementById("quiz-started-msg");
+  if (msg) msg.style.display = "none";
+}, 120000); // 2 minutes
 
-  // Scroll to the top of the page after rendering answers
-  window.scrollTo({ top: 0, behavior: "smooth" });
+function exitToSection1() {
+ document.getElementById("password-modal").style.display = "none";
+  window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas#contact-us";
 }
 
- function goToHome() {
-   window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas25-1#quizzes";
+function exitToSection2() {
+  document.getElementById("password-modal").style.display = "none";
+  window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas#lessons";
+}
+
+function closeModal() {
+  const confirmExit = confirm("Urashaka Gusubira Inyuma? Kanda OK niba Udakomeje Ikizamini cg CANCEL ukomeze ikizami.");
+  if (confirmExit) {
+    document.getElementById('password-modal').style.display = 'none';
+    document.getElementById('start-quiz-btn').style.display = 'inline-block';
+    document.getElementById('password-input').value = "";
+  }
+}
+
+function goToHome() {
+   window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas#quizzes";
     }
   </script>
 </body>
