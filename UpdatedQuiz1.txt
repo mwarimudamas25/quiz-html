@@ -224,104 +224,12 @@
 
 const questions = [
   {
-    question: "1. Amabwiriza rusange agenga imihanda n'uburyo bwo kuyigendamo mu Rwanda yashyizweho muri:",
-    options: ["a) 1992", "b) 2002", "c) 1987", "d) 1998"],
+    question: "1. Ikibazo cya mbere:",
+    options: ["a) Igisubizo cya mbere", "b) Igisubizo cya kabiri", "c) Igisubizo cya gatatu", "d) Igisubizo cya kane"],
     correct: 1
-  },
-  {
-    question: "2. Amabwiriza rusange agenga imihanda n'uburyo bwo kuyigendamo agenga uburyo bwo kugenda mu nzira nyabagendwa bwerekeye:",
-    options: ["a) Abanyamaguru", "b) Inyamaswa ziba mu ishyamba", "c) Ibinyabiziga", "d) A na C ni ibisubizo by’ukuri"],
-    correct: 3
-  },
-  {
-    question: "3. Ijambo 'Inzira nyabagendwa' risobanura kimwe muri ibi bikurikira:",
-    options: ["a) Ahantu imodoka zihagarara gusa", "b) Ahantu hose abantu nyamwinshi bahurira no kugenda ku butaka", "c) Imihanda minini gusa", "d) Utuyira tw’imodoka mu mujyi no mu cyaro"],
-    correct: 1
-  },
-  {
-    question: "4. Ijambo 'Umuhanda' risobanura:",
-    options: ["a) Ahantu hose abantu banyura cg ahantu hose hateretse ibinyabiziga", "b) Igice cy’inzira nyabagendwa kigendwamo n’ibinyabiziga", "c) Inzira z’abanyamaguru gusa", "d) Nta gisubizo cy’ukuri kirimo"],
-    correct: 1
-  },
-  {
-    question: "5. Ijambo 'Inzira y'ibinyabiziga' risobanura:",
-    options: ["a) Umuhanda n’inzira ziwukikije", "b) Ahantu hagendwa n’abanyamaguru gusa", "c) Ahantu imodoka zihagarara", "d) Utuyira duto two mu mujyi"],
-    correct: 0
-  },
-  {
-    question: "6. Iyo bavuze Igisate cy'umuhanda wumva kimwe muri ibi bikurikira:",
-    options: ["a) Igice cy’umuhanda kigenewe abanyamaguru gusa", "b) Ahantu imodoka zihagarara", "c) Igice cy’umuhanda cyagenewe kugendwamo n’ibinyabiziga binini bibangikanye", "d) Umurongo ugaragaza aho umuhanda urangirira"],
-    correct: 2
-  },
-  {
-    question: "7. Ijambo 'Agahanda k'amagare' risobanura iki:",
-    options: ["a) Igice cy’inzira nyabagendwa cyagenewe kunyurwamo n’amagare na velomoteri", "b) Umuhanda wose ugenewe ibinyabiziga byose", "c) Ahantu imodoka zihagarara", "d) Igice cy’umuhanda cyagenewe abanyamaguru"],
-    correct: 0
-  },
-  {
-    question: "8. Amagambo 'Isangano' na 'Inkomane' bivuga:",
-    options: ["a) Ahantu imodoka ziparika", "b) Ahantu hose imihanda ihurira cyangwa aho umuhanda usukira mu wundi", "c) Umuhanda munini ugabanya imijyi ibiri", "d) Igice cy’umuhanda cyagenewe abanyamaguru"],
-    correct: 1
-  },
-  {
-    question: "9. Ijambo 'Akayira' risobanura iki?",
-    options: ["a) Ahantu imodoka zihagarara", "b) Umuhanda munini ugenewe ibinyabiziga byose", "c) Inzira nyabagendwa ifunganye yagenewe gusa abanyamaguru cyangwa ibinyabiziga bigendera ku biziga bibiri", "d) Inzira ya gari ya moshi"],
-    correct: 2
-  },
-  {
-    question: "10. Inzira y’igitaka ni:",
-    options: ["a) Inzira igenewe abantu gusa", "b) Inzira yabugenewe n’abanyamaguru gusa", "c) Inzira nyabagendwa yagutse kurusha akayira ariko itari iy’ibinyabiziga bibiri", "d) Inzira ikoreshwa gusa mu gihe cy’imvura"],
-    correct: 2
-  },
-  {
-    question: "11. Urusisiro ni:",
-    options: ["a) Ahantu hagaragaramo amazu gusa nta mihanda irimo", "b) Ahantu hari amazu atandukanye yegeranye cyangwa afatanye hatagaragazwa n’ibyapa by’aho hantu", "c) Ahantu hatuye abantu bacye cyane hatagira amazu afatanye", "d) Nta gisubizo cy’ukuri kirimo"],
-    correct: 3
-  },
-  {
-    question: "12. Ijambo Umuyobozi risobanura:",
-    options: ["a) Umuntu uyobora abandi mu kazi ka Leta", "b) Umuntu wese utwaye ikinyabiziga cyangwa uyobora inyamaswa", "c) Umuntu wicaye mu modoka atari umushoferi", "d) Umuntu ucunga umutekano mu muhanda"],
-    correct: 1
-  },
-  {
-    question: "13. Iyo umugenzi ahagaze, umukozi ubifitiye ububasha ni ngombwa ko buri gihe aba afite ibimenyetso:",
-    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
-    correct: 1
-  },
-  {
-    question: "14. Ugendeye ku gisobanuro k’ijambo ikinyabiziga, Indogobe cyangwa ifarashi ikurura ikinyabiziga si ikinyabiziga:",
-    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
-    correct: 1
-  },
-  {
-    question: "15. Tracteur cg umutraktori, imashini ikoreshwa mu buhinzi ifatwa nk’ikinyabiziga:",
-    options: ["a) Yego", "b) Oya", "c) —", "d) —"],
-    correct: 0
-  },
-  {
-    question: "16. Ikinyamitende kigomba kugira iki muri ibi bikurikira:",
-    options: ["a) Moteri ikoresha lisansi", "b) Ibiziga byibuze kimwe kandi kigendeshwa n’imbaraga z’abantu", "c) Moteri y’amashanyarazi", "d) Imodoka igendeshwa na essence"],
-    correct: 1
-  },
-  {
-    question: "17. Ni ikihe kinyabiziga gishobora no kuba Ikinyamitende muri ibi?:",
-    options: ["a) Moto ifite moteri", "b) Igare ry’abafite ubumuga", "c) Igare rigendera ku biziga bibiri rikoreshejwe n’amaguru", "d) Moto ifite imitende itatu"],
-    correct: 2
-  },
-  {
-    question: "18. Ibi bikurikira ni ibinyabiziga ukuyemo:",
-    options: ["a) Imodoka (Car)", "b) Moto (Motorcycle)", "c) Ibimasa bihinga (Draught cattle)", "d) Igare (Bicycle)"],
-    correct: 2
-  },
-  {
-    question: "19. Ijambo Igare rivuga:",
-    options: ["a) Ikinyamitende gifite ibiziga bibiri cg bitatu", "b) Ikinyamitende gifite ibiziga bibiri gusa", "c) Ikinyamitende gifite moteri", "d) Nta gisubizo cy’ukuri kirimo"],
-    correct: 1
-  },
-  {
-    question: "20. Velomoteri:",
-    options: ["a) Ni ikinyabiziga gifite ibiziga bibiri byonyine", "b) Ni ikinyabiziga kitarengeje santimetero kibe 50", "c) Yihuta kurenza Km 100 mu isaha", "d) A na B ni ibisubizo by’ukuri"],
-    correct: 3
+//Insert other remaining questions//
+..............................
+
   }
 ];
 
