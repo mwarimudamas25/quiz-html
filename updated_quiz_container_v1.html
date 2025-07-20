@@ -1,0 +1,130 @@
+<div id="quiz-container">
+  <p id="quiz-started-msg" class="warning-text" style="color:red; font-weight:bold;">Ikizami Cyamaze Gutangira...</p>
+  <div id="timer" style="font-weight: bold; color: red; margin-bottom: 20px;">Igihe Gisigaye: 20:00</div>
+  <p>Ikizami Kigizwe n'Ibibazo 20, Buri Kibazo Gifite Inota 1, Kikamara Iminota 20. Amahirwe Masa!</p>
+  <div class="question">
+    <p><strong>1. Ikibazo cya mbere:</strong></p>
+    <div class="options">
+      <button class="option-button" onclick="checkAnswer(this, 0, 1)">a) Igisubizo cya mbere</button>
+      <button class="option-button" onclick="checkAnswer(this, 1, 1)">b) Igisubizo cya kabiri</button>
+      <button class="option-button" onclick="checkAnswer(this, 2, 1)">c) Igisubizo cya gatatu</button>
+      <button class="option-button" onclick="checkAnswer(this, 3, 1)">d) Igisubizo cya kane</button>
+    </div>
+  </div>
+  <button class="submit-button" onclick="submitQuiz()">OHEREZA UBONE AMANOTA YAWE</button>
+  <button class="home-button" onclick="goToHome()">SOHOKA/SUBIRA KU BIZAMI</button>
+  <div id="loadingSpinner"></div>
+  <div id="result-message"></div>
+  <div class="bottom-buttons">
+    <button class="review-button" onclick="reviewAnswers()" style="display:none;">REBA IBISUBIZO BYOSE</button>
+    <button onclick="scrollToTop()">SUBIRA KU KIBAZO CYA MBERE</button>
+  </div>
+</div>
+
+<style>
+  .option-button {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  .option-button.correct {
+    background-color: green;
+    color: white;
+  }
+  .option-button.wrong {
+    background-color: red;
+    color: white;
+  }
+  .submit-button, .home-button, .review-button {
+    padding: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  #loadingSpinner {
+    display: none;
+    margin: 20px auto;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  let submitted = false;
+  let timeLeft = 20 * 60;
+  let timerInterval;
+
+  function checkAnswer(button, selectedIndex, correctIndex) {
+    const buttons = button.parentNode.querySelectorAll(".option-button");
+    buttons.forEach((btn, idx) => {
+      btn.disabled = true;
+      if (idx === correctIndex) {
+        btn.classList.add("correct");
+      } else if (idx === selectedIndex) {
+        btn.classList.add("wrong");
+      }
+    });
+  }
+
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      if (--timeLeft <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = "Igihe Gisigaye: 00:00";
+        submitQuiz();
+      } else {
+        const minutes = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+        const seconds = String(timeLeft % 60).padStart(2, "0");
+        document.getElementById("timer").textContent = `Igihe Gisigaye: ${minutes}:${seconds}`;
+      }
+    }, 1000);
+  }
+
+  function submitQuiz() {
+    if (submitted) {
+      alert("Ikizami Cyamaze Koherezwa, Kanda kuri OK ujye kuri SOHOKA/SUBIRA KU BIZAMI wongere utangire !");
+      return;
+    }
+    submitted = true;
+    document.getElementById("loadingSpinner").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("loadingSpinner").style.display = "none";
+      document.querySelector(".review-button").style.display = "inline-block";
+      const score = 13; // For demo purposes
+      const resultMessage = document.getElementById("result-message");
+      resultMessage.innerHTML = score >= 12
+        ? `<span style='color:green'>Wabonye Amanota ${score}/20<br>Watsinze, Komereza Aho!</span>`
+        : `<span style='color:red'>Wabonye Amanota ${score}/20<br>Watsinzwe, Ukeneye Kwihugura Bihagije!</span>`;
+      resultMessage.scrollIntoView({ behavior: "smooth" });
+    }, 5000);
+  }
+
+  function reviewAnswers() {
+    alert("Review feature would show correct/incorrect responses with feedback (not implemented in demo).");
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function goToHome() {
+    window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas#quizzes";
+  }
+
+  // Timer start
+  window.onload = startTimer;
+</script>
