@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.5</title>
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 20px; background: #fff; margin: 0; padding: 20px; }
+    .custom-button { width: 300px; height: 40px; background-color: blue; color: white; border: none; font-size: 20px; font-weight: bold; cursor: pointer; }
+    .custom-button:hover { background-color: darkblue; }
+    #quiz-container { display: none; padding: 20px; background: #fff; width: 100%; box-sizing: border-box; }
+    .question { font-weight: bold; margin-bottom: 20px; }
+    .option-button { display: block; margin: 10px 0; padding: 10px; border: 2px solid #ccc; border-radius: 6px; cursor: pointer; background-color: white; }
+    .option-button.correct { background-color: #c8f7c5; border-color: green; }
+    .option-button.wrong { background-color: #f7c5c5; border-color: red; }
+    input[type="radio"] { transform: scale(1.5); margin-right: 10px; }
+    .submit-button, .review-button, .home-button { margin-top: 20px; padding: 10px 20px; font-weight: bold; border: none; cursor: pointer; }
+    .submit-button { background-color: blue; color: white; }
+    .review-button { background-color: green; color: white; display: none; }
+    .home-button { background-color: darkred; color: white; }
+    #timer { font-weight: bold; color: red; margin-bottom: 10px; }
+    #result { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h3>ITOZE GUSUBIZA IBIBAZO UTSINDIRE PROVISOIRE MU GIHE GITO!</h3>
+  <button class="custom-button" onclick="startQuiz()">TANGIRA IKIZAMI CYA 5</button>
+  <div id="quiz-container">
+    <div id="timer"></div>
+    <p><strong style="color: darkblue;">Ikizami Kigizwe n'Ibibazo 20, Buri Kibazo Gifite Inota 1, Kikamara Iminota 20. Amahirwe Masa!!!</strong></p>
+    <div id="question-box"></div>
+    <button class="submit-button" onclick="submitQuiz()">OHEREZA UBONE AMANOTA YAWE</button>
+    <button class="home-button" onclick="goToHome()">SOHOKA/SUBIRA KU BIZAMI</button>
+    <div id="result"></div>
+    <button class="review-button" id="reviewAnswersBtn" onclick="reviewAnswers()">REBA IBISUBIZO BYOSE</button>
+  </div>
+
+  <script>
+    let questions = [
+      { question: "1. Umuhanda ni iki?", options: ["A. Aho abantu bacaho", "B. Aho imodoka zigendera", "C. Aho igisirikare gikora imyitozo", "D. Icyanya cy’indege"], answer: 1 },
+      { question: "2. Uburyo bwemewe bwo guhagarika imodoka ni ubuhe?", options: ["A. Aho ubishakiye hose", "B. Aho nta kimenyetso kibujije", "C. Hagati y’umuhanda", "D. Hejuru y’ikiraro"], answer: 1 }
+    ];
+    let currentQuestion = 0;
+    let userAnswers = new Array(questions.length).fill(null);
+    let submitted = false;
+    let time = 20 * 60;
+    let timerInterval;
+
+    function startQuiz() {
+      document.querySelector(".custom-button").style.display = "none";
+      document.getElementById("quiz-container").style.display = "block";
+      showQuestion(currentQuestion);
+      startTimer();
+    }
+
+    function showQuestion(index) {
+      let q = questions[index];
+      let html = '<div class="question">' + q.question + '</div>';
+      for (let i = 0; i < q.options.length; i++) {
+        html += `<label class="option-button">
+          <input type="radio" name="question${index}" value="${i}" ${userAnswers[index] === i ? "checked" : ""} onclick="selectAnswer(${index}, ${i})"> ${q.options[i]}
+        </label>`;
+      }
+      document.getElementById("question-box").innerHTML = html;
+    }
+
+    function selectAnswer(qIndex, optionIndex) {
+      userAnswers[qIndex] = optionIndex;
+    }
+
+    function startTimer() {
+      const timerDiv = document.getElementById("timer");
+      timerInterval = setInterval(() => {
+        let mins = Math.floor(time / 60);
+        let secs = time % 60;
+        timerDiv.textContent = "Igihe Gisigaye: " + mins + ":" + (secs < 10 ? "0" : "") + secs;
+        time--;
+        if (time < 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      clearInterval(timerInterval);
+      let score = 0;
+      for (let i = 0; i < questions.length; i++) {
+        if (userAnswers[i] === questions[i].answer) score++;
+      }
+      document.getElementById("result").innerHTML = "Wabonye Amanota: " + score + "/" + questions.length;
+      document.getElementById("reviewAnswersBtn").style.display = "inline-block";
+    }
+
+    function reviewAnswers() {
+      let reviewHtml = "";
+      for (let i = 0; i < questions.length; i++) {
+        let q = questions[i];
+        reviewHtml += "<div class='question'>" + q.question + "</div>";
+        for (let j = 0; j < q.options.length; j++) {
+          let className = "option-button";
+          if (userAnswers[i] === j && j === q.answer) className += " correct";
+          else if (userAnswers[i] === j && j !== q.answer) className += " wrong";
+          else if (j === q.answer) className += " correct";
+          reviewHtml += `<label class="${className}">${q.options[j]}</label>`;
+        }
+      }
+      document.getElementById("question-box").innerHTML = reviewHtml;
+    }
+
+    function goToHome() {
+      window.location.href = "https://mwarimudamas.wixsite.com/mwarimudamas#quizzes";
+    }
+  </script>
+</body>
+</html>
