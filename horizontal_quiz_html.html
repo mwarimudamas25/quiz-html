@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ikizamini No.5 - Horizontal Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      margin: 0;
+      padding: 20px;
+    }
+    .question-navigation {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .question-number {
+      margin: 5px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      cursor: pointer;
+    }
+    .question-number.active {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+    .question-container {
+      display: none;
+    }
+    .question-container.active {
+      display: block;
+    }
+    .option-button {
+      display: block;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .navigation-buttons {
+      margin-top: 20px;
+    }
+    .submit-button {
+      background-color: blue;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .review-section {
+      display: none;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Ikizamini No.5</h2>
+  <div class="question-navigation" id="questionNav"></div>
+  <div id="quizContainer"></div>
+  <div class="navigation-buttons">
+    <button id="prevBtn" onclick="prevQuestion()">Previous</button>
+    <button id="nextBtn" onclick="nextQuestion()">Next</button>
+    <button class="submit-button" onclick="submitQuiz()">Submit</button>
+  </div>
+  <div class="review-section" id="reviewSection"></div>
+
+  <script>
+    const questions = Array.from({ length: 20 }, (_, i) => ({
+      question: `Iki ni ikibazo cya ${i + 1}?`,
+      options: ['A', 'B', 'C', 'D'],
+      correct: ['A', 'B', 'C', 'D'][Math.floor(Math.random() * 4)]
+    }));
+    let userAnswers = Array(20).fill(null);
+    let currentQuestionIndex = 0;
+
+    const quizContainer = document.getElementById('quizContainer');
+    const navContainer = document.getElementById('questionNav');
+
+    function renderNav() {
+      navContainer.innerHTML = '';
+      for (let i = 0; i < questions.length; i++) {
+        const btn = document.createElement('div');
+        btn.className = 'question-number' + (i === currentQuestionIndex ? ' active' : '');
+        btn.textContent = i + 1;
+        btn.onclick = () => {
+          currentQuestionIndex = i;
+          updateQuizView();
+          scrollToTop();
+        };
+        navContainer.appendChild(btn);
+      }
+    }
+
+    function renderQuestions() {
+      quizContainer.innerHTML = '';
+      questions.forEach((q, index) => {
+        const div = document.createElement('div');
+        div.className = 'question-container' + (index === currentQuestionIndex ? ' active' : '');
+        div.innerHTML = `
+          <p><strong>${index + 1}. ${q.question}</strong></p>
+          ${q.options.map(opt => `
+            <label class="option-button">
+              <input type="radio" name="q${index}" value="${opt}" onchange="selectAnswer(${index}, '${opt}')" ${userAnswers[index] === opt ? 'checked' : ''}>
+              ${opt}. Igisubizo ${opt}
+            </label>
+          `).join('')}
+        `;
+        quizContainer.appendChild(div);
+      });
+    }
+
+    function selectAnswer(index, value) {
+      userAnswers[index] = value;
+    }
+
+    function updateQuizView() {
+      renderNav();
+      document.querySelectorAll('.question-container').forEach((q, i) => {
+        q.classList.toggle('active', i === currentQuestionIndex);
+      });
+      document.getElementById('prevBtn').style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+      document.getElementById('nextBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'inline-block';
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        updateQuizView();
+        scrollToTop();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        updateQuizView();
+        scrollToTop();
+      }
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      const reviewSection = document.getElementById('reviewSection');
+      reviewSection.innerHTML = '<h3>Ibisubizo:</h3>';
+      questions.forEach((q, i) => {
+        const correct = q.correct;
+        const user = userAnswers[i] || 'Nta gisubizo';
+        const color = user === correct ? 'green' : 'red';
+        if (user === correct) score++;
+        reviewSection.innerHTML += `
+          <p><strong>${i + 1}. ${q.question}</strong><br>
+          Wahisemo: <span style="color:${color}">${user}</span><br>
+          Igisubizo nyacyo: <span style="color:green">${correct}</span></p>
+        `;
+      });
+      reviewSection.innerHTML += `<p><strong>Amanota yawe: ${score}/20</strong></p>`;
+      reviewSection.style.display = 'block';
+      scrollToTop();
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initial rendering
+    renderQuestions();
+    renderNav();
+    updateQuizView();
+  </script>
+</body>
+</html>
